@@ -308,23 +308,175 @@
         margin-bottom: 50px;
       }
 
+      .portfolio-sections {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+        margin-bottom: 80px;
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+        align-items: start;
+      }
+
+      .main-column {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .sidebar-column {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        position: sticky;
+        top: 100px;
+      }
+
+      .sidebar-column .section-block {
+        text-align: left;
+      }
+
+      .sidebar-column .section-block p,
+      .sidebar-column .section-block ul,
+      .sidebar-column .section-block li {
+        text-align: left;
+      }
+
+      .section-block {
+        padding: 30px 40px;
+        text-align: justify;
+      }
+
+      .section-block h2 {
+        font-size: 22px;
+        color: var(--cyan-glow);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+      }
+
+      .section-block p {
+        font-size: 15px;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 15px;
+      }
+      
+      .section-block strong {
+        color: var(--text-main);
+      }
+
+      .feature-list {
+        list-style-type: none;
+        padding-left: 0;
+        text-align: left;
+      }
+
+      .feature-list li {
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 15px;
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 15px;
+      }
+
+      .feature-list li::before {
+        content: '▹';
+        position: absolute;
+        left: 0;
+        color: var(--cyan-glow);
+        font-weight: bold;
+      }
+
+      .gallery-title {
+        font-size: 32px;
+        margin-bottom: 40px;
+        color: var(--text-main);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .project-images {
+        column-count: 2;
+        column-gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto 50px auto;
+      }
+
       .project-images img {
         width: 100%;
-        height: auto;
         display: block;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         border-radius: 16px;
         border: 1px solid var(--border-glass);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        transition: all 0.4s;
-        filter: brightness(0.9);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        filter: brightness(0.85);
+        break-inside: avoid;
+        cursor: zoom-in; /* Indicate it's clickable */
       }
 
       .project-images img:hover {
         transform: scale(1.02);
-        border-color: var(--purple-glow);
-        box-shadow: 0 15px 40px rgba(176, 38, 255, 0.2);
-        filter: brightness(1);
+        border-color: var(--cyan-glow);
+        box-shadow: 0 15px 40px rgba(0, 240, 255, 0.3);
+        filter: brightness(1.1);
+        z-index: 2;
+        position: relative;
+      }
+
+      /* Lightbox System */
+      .lightbox {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+      
+      .lightbox.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+      
+      .lightbox img {
+        max-width: 90%;
+        max-height: 90vh;
+        border-radius: 8px;
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+      }
+      
+      .lightbox.active img {
+        transform: scale(1);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        color: white;
+        font-size: 50px;
+        cursor: pointer;
+        transition: color 0.3s;
+        line-height: 1;
+      }
+
+      .lightbox-close:hover {
+        color: var(--cyan-glow);
       }
 
       /* Footer Styling */
@@ -415,6 +567,12 @@
         .project-title {
           font-size: 32px;
         }
+        .portfolio-sections {
+          grid-template-columns: 1fr;
+        }
+        .project-images {
+          column-count: 1;
+        }
       }
     </style>
   </head>
@@ -499,6 +657,102 @@
         ></iframe>
       </div>
 
+      <!-- Sections -->
+      <div class="portfolio-sections">
+        
+        <div class="main-column">
+          <!-- Gameplay Features -->
+          <div class="glass-panel section-block">
+            <h2><i class="fas fa-gamepad"></i> Gameplay Features</h2>
+            <ul class="feature-list">
+              <li><strong>Responsive Player Controls:</strong> Smooth spaceship movement with mouse aiming, left-click shooting, and directional dash.</li>
+              <li><strong>Three Playable Stages:</strong> Progress through three handcrafted levels with increasing difficulty.</li>
+              <li><strong>Unique Boss Battles:</strong> Face three bosses with distinct attack patterns and multi-phase behaviors.</li>
+              <li><strong>Dynamic Enemy AI:</strong> Enemies track the player and execute different attack behaviors.</li>
+              <li><strong>Inventory & Item System:</strong> Collect items to restore health, recover energy, and enhance combat.</li>
+              <li><strong>Skill-Based Combat:</strong> Use multiple ship abilities strategically during battles.</li>
+              <li><strong>Progressive Difficulty:</strong> Enemy waves and boss mechanics become more challenging as the game progresses.</li>
+            </ul>
+          </div>
+
+          <!-- Technical Highlights -->
+          <div class="glass-panel section-block">
+            <h2><i class="fas fa-microchip"></i> Technical Highlights</h2>
+            <ul class="feature-list">
+              <li>Designed modular gameplay systems with clean, maintainable C# architecture.</li>
+              <li>Developed a flexible inventory system supporting collectible items, consumables, and gameplay progression.</li>
+              <li>Used ScriptableObjects for flexible and data-driven game configuration.</li>
+              <li>Implemented Object Pooling to reduce runtime allocations and improve performance.</li>
+              <li>Profiled CPU and memory usage using Unity Profiler.</li>
+              <li>Structured enemy AI and boss behaviors into scalable and reusable systems.</li>
+              <li>Implemented Observer and Dirty Flag patterns to update UI only when game data changes, reducing unnecessary UI redraws and improving performance.</li>
+            </ul>
+          </div>
+
+          <!-- Challenges & Solutions -->
+          <div class="glass-panel section-block">
+            <h2><i class="fas fa-tools"></i> Challenges & Solutions</h2>
+            
+            <div style="margin-bottom: 25px;">
+              <h3 style="color: var(--cyan-glow); font-size: 18px; margin-bottom: 10px;">Frequent Instantiate/Destroy</h3>
+              <p><strong>Challenge:</strong> Frequent Instantiate and Destroy calls for bullets, enemies, and explosion effects caused unnecessary memory allocations, resulting in GC spikes and unstable frame rates during intense gameplay.</p>
+              <p><strong>Solution:</strong> Implemented an Object Pooling system to reuse bullets, enemies, and visual effects instead of creating and destroying objects repeatedly.</p>
+              <p><strong>Result:</strong> Reduced runtime allocations and garbage collection, resulting in smoother gameplay and more stable FPS during combat.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+              <h3 style="color: var(--cyan-glow); font-size: 18px; margin-bottom: 10px;">Excessive UI Updates</h3>
+              <p><strong>Challenge:</strong> UI elements such as the inventory and player status were being refreshed every frame, causing unnecessary redraws and reducing rendering performance.</p>
+              <p><strong>Solution:</strong> Combined the Observer and Dirty Flag patterns so UI elements update only when the underlying game data changes.</p>
+              <p><strong>Result:</strong> Eliminated redundant UI redraws, improved rendering efficiency, and maintained cleaner, decoupled UI logic.</p>
+            </div>
+
+            <div>
+              <h3 style="color: var(--cyan-glow); font-size: 18px; margin-bottom: 10px;">Inventory</h3>
+              <p><strong>Challenge:</strong> Keeping inventory data synchronized with the UI became difficult as new item types were added.</p>
+              <p><strong>Solution:</strong> Designed a modular inventory system with event-driven updates to keep gameplay logic and UI loosely coupled.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-column">
+          <!-- Role & Tech Stack -->
+          <div class="glass-panel section-block">
+            <h2><i class="fas fa-user-tag"></i> My Role</h2>
+	    <ul class="feature-list" style="margin-top: 0;">
+              <li><strong>Role:</strong> Solo Unity Game Developer</li>
+            </ul>
+            
+            <p style="color: var(--cyan-glow); font-weight: bold; margin-bottom: 10px; font-size: 18px;"><i class="fas fa-layer-group" style="margin-right: 8px;"></i>Tech Stack</p>
+            <ul class="feature-list" style="margin-top: 0;">
+              <li><strong>Engine:</strong> Unity 6</li>
+              <li><strong>Language:</strong> C#</li>
+              <li><strong>Architecture:</strong> ScriptableObject, Object Pooling, Singleton Pattern, Observer Pattern</li>
+              <li><strong>Tools:</strong> Git & GitHub, Unity Profiler, Visual Studio</li>
+            </ul>
+          </div>
+
+          <!-- Lessons Learned & Future Improvements -->
+          <div class="glass-panel section-block">
+            <h2><i class="fas fa-lightbulb"></i> Lessons Learned</h2>
+            <ul class="feature-list" style="margin-bottom: 30px;">
+              <li>Completed the full game development lifecycle, from concept to final build.</li>
+              <li>Designed modular and reusable gameplay systems with clean C# architecture.</li>
+              <li>Optimized performance using Object Pooling and Unity Profiler.</li>
+              <li>Built maintainable enemy AI and boss behavior systems.</li>
+              <li>Strengthened debugging and problem-solving through iterative development.</li>
+            </ul>
+
+            <h3 style="color: var(--cyan-glow); font-size: 18px; margin: 0 0 15px 0; display: flex; align-items: center;"><i class="fas fa-rocket" style="margin-right: 8px;"></i> Future Improvements</h3>
+	    <ul class="feature-list" style="margin-top: 0;">
+              <li>In future iterations, I plan to add a Save & Load system, adopt Addressable Assets, expand enemy AI with more advanced behaviors, and further polish gameplay balance and the overall user experience.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <h2 class="gallery-title"><i class="fas fa-images"></i> In-Game Gallery</h2>
       <div class="project-images">
         <img
           src="SpaceShip/ImageGamePlaySpaceShip/GiaoDienGame_1.jpg"
@@ -544,7 +798,7 @@
       <div class="footer-content">
         <div class="social-links">
           <a
-            href="mailto:your-email@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=dinhtanthanh19@gmail.com"
             target="_blank"
             class="social-link"
             title="Email"
@@ -558,14 +812,14 @@
             ><i class="fab fa-github"></i
           ></a>
           <a
-            href="https://linkedin.com/in/your-username"
+            href="https://www.linkedin.com/in/dinhtanthanh/"
             target="_blank"
             class="social-link"
             title="LinkedIn"
             ><i class="fab fa-linkedin-in"></i
           ></a>
           <a
-            href="https://your-username.itch.io"
+            href="https://dinh-tan-thanh.itch.io/"
             target="_blank"
             class="social-link"
             title="itch.io"
@@ -591,5 +845,35 @@
         </p>
       </div>
     </footer>
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <span class="lightbox-close" id="lightbox-close">&times;</span>
+      <img id="lightbox-img" src="" alt="Enlarged Image" />
+    </div>
+
+    <script>
+      // Lightbox Logic
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('lightbox-close');
+      const galleryImages = document.querySelectorAll('.project-images img');
+
+      galleryImages.forEach(img => {
+        img.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightbox.classList.add('active');
+        });
+      });
+
+      closeBtn.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('active');
+        }
+      });
+    </script>
   </body>
 </html>
