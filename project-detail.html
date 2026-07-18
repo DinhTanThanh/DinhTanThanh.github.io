@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <!-- THAY ĐỔI TIÊU ĐỀ TRANG TƯƠNG ỨNG VỚI DỰ ÁN -->
+    <title>Chimp tee - Portfolio</title>
+    
     <!-- Font hiện đại phù hợp với phong cách Game Developer -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome cho các icon mạng xã hội -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -21,7 +22,7 @@
             --accent-purple: #b026ff;
             --border-color: #30363d;
         }
-        
+
         /* Hiệu ứng mượt mà khi load trang */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -37,7 +38,7 @@
             animation: fadeIn 0.8s ease-out forwards;
         }
         
-        /* Header Styling */
+        /* Header Styling (Giống trang chủ) */
         header {
             position: relative;
             background-color: var(--header-bg);
@@ -87,56 +88,93 @@
             box-shadow: 0 0 8px var(--accent-glow);
         }
         
-        /* Main Portfolio Grid */
-        main {
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 0 20px;
+        /* Header Right (Contact & Menu) */
+        .header-right {
+            position: absolute;
+            right: 30px;
+            top: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .portfolio-item {
-            text-align: center;
+
+        .contact-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--text-color);
             text-decoration: none;
-            color: inherit;
-            display: block;
+            border: 2px solid var(--text-light);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            transition: all 0.3s;
+        }
+        .contact-btn:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+            border-color: var(--text-color);
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        .menu-btn:hover {
+            color: var(--accent-glow);
+        }
+        
+        /* Project Detail Styling */
+        main.project-detail {
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .project-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+        .project-description {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 650px;
+            margin: 0 auto 50px auto;
+            background: var(--header-bg);
+            padding: 20px 30px;
             border-radius: 12px;
-            background-color: var(--header-bg);
             border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .portfolio-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--accent-purple);
-            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.2);
-        }
-        .portfolio-item img {
+        .project-images img {
             width: 100%;
             height: auto;
             display: block;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: all 0.4s;
         }
-        .portfolio-item:hover img {
-            filter: brightness(1.1);
-        }
-        .portfolio-item h3 {
-            margin: 20px 0;
-            font-size: 20px;
-            color: var(--text-color);
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        .portfolio-item:hover h3 {
-            color: var(--accent-purple);
-            text-shadow: 0 0 10px rgba(176, 38, 255, 0.4);
+        .project-images img:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-purple);
+            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.2);
         }
         
-        /* Footer Styling */
+        /* Footer Styling (Giống trang chủ) */
         footer {
             background-color: var(--header-bg);
             text-align: center;
@@ -188,78 +226,6 @@
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
         }
 
-        /* Header Right (Contact & Menu) */
-        .header-right {
-            position: absolute;
-            right: 30px;
-            top: 50px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .contact-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: transparent;
-            color: var(--text-color);
-            text-decoration: none;
-            border: 2px solid var(--text-light);
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            transition: all 0.3s;
-        }
-        .contact-btn:hover {
-            background: var(--text-color);
-            color: var(--bg-color);
-            border-color: var(--text-color);
-        }
-
-        .menu-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-color);
-            font-size: 28px;
-            cursor: pointer;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            transition: color 0.3s;
-        }
-        .menu-btn:hover {
-            color: var(--accent-glow);
-        }
-
-        /* Home Hero Section */
-        .home-hero {
-            text-align: center;
-            padding: 40px 20px 60px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .home-hero h1 {
-            font-size: 48px;
-            margin: 0 0 10px 0;
-            color: var(--text-color);
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
-        .home-hero h1 span {
-            color: var(--accent-glow);
-        }
-        .home-hero h2 {
-            font-size: 24px;
-            color: var(--accent-purple);
-            margin: 0 0 20px 0;
-            font-weight: 500;
-        }
-        .home-hero p {
-            font-size: 18px;
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             nav a {
@@ -271,6 +237,9 @@
                 justify-content: center;
                 margin-top: 20px;
             }
+            .project-title {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
@@ -279,8 +248,10 @@
     <!-- Header Section -->
     <header>
         <div class="logo">
-            <!-- THAY ĐỔI LOGO: Sửa đường dẫn link hình ảnh trong src="..." -->
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Logo">
+            <!-- Nhấn vào logo để về lại trang chủ -->
+            <a href="index.html">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Logo">
+            </a>
         </div>
         <nav>
             <a href="index.html" class="active">Portfolio</a>
@@ -292,47 +263,36 @@
         </div>
     </header>
 
-    <!-- Main Content Section -->
-    <main>
-        <!-- Home Hero Section -->
-        <section class="home-hero">
-            <!-- THAY ĐỔI TÊN CỦA BẠN -->
-            <h1>Hi, I'm <span>Đinh Tấn Thành</span></h1>
-            <!-- THAY ĐỔI VỊ TRÍ/CHỨC DANH CỦA BẠN -->
-            <h2>Unity Game Developer</h2>
-            <!-- THAY ĐỔI ĐOẠN GIỚI THIỆU NGẮN CỦA BẠN -->
-            <p>I am a passionate Unity Game Developer with a strong focus on creating immersive gameplay mechanics and optimized systems. I love turning creative concepts into engaging digital experiences. Below are some of my highlighted projects.</p>
-        </section>
-        <div class="grid">
-            <!-- PROJECT 1 -->
-            <!-- Link tới trang chi tiết của dự án -->
-            <a href="project-detail.html" class="portfolio-item">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Project 1">
-                <h3>Chimp tee</h3>
-            </a>
+    <!-- Project Detail Section -->
+    <main class="project-detail">
+        <!-- THAY ĐỔI TÊN DỰ ÁN Ở ĐÂY -->
+        <h1 class="project-title">Chimp tee</h1>
+        
+        <!-- THAY ĐỔI MÔ TẢ DỰ ÁN Ở ĐÂY -->
+        <p class="project-description">
+            I was asked by mailchimp a couple of years ago to make tee for their company. I believe the design was not used but nonetheless it was an extremely fun design to make and an exelent client. Very happy for the opportunity.
+        </p>
+
+        <!-- KHU VỰC HÌNH ẢNH CHI TIẾT -->
+        <div class="project-images">
+            <!-- Thay đổi đường dẫn ảnh trong src="..." thành ảnh dự án của bạn -->
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop" alt="Chimp tee design">
             
-            <!-- BẠN CÓ THỂ COPY 1 KHỐI <a class="portfolio-item">...</a> VÀ DÁN XUỐNG ĐÂY ĐỂ THÊM DỰ ÁN MỚI -->
+            <!-- Bạn có thể copy dòng img này để thêm hình cho dự án -->
+            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1000&auto=format&fit=crop" alt="Chimp tee shirt mockup">
         </div>
     </main>
 
-    <!-- Footer Section (Phần cuối trang) -->
-    <footer id="footer-section">
+    <!-- Footer Section -->
+    <footer>
         <div class="footer-content">
             <div class="social-links">
                 <!-- THAY ĐỔI LINK GMAIL: Sửa email của bạn -->
                 <a href="mailto:your-email@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
-
-                <!-- THAY ĐỔI LINK GITHUB: Sửa href="..." -->
                 <a href="https://github.com/DinhTanThanh" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                
-                <!-- THAY ĐỔI LINK LINKEDIN: Sửa href="..." -->
                 <a href="https://linkedin.com/in/your-username" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                
-                <!-- THAY ĐỔI LINK ITCH.IO: Sửa href="..." -->
                 <a href="https://your-username.itch.io" target="_blank" title="itch.io"><i class="fab fa-itch-io"></i></a>
             </div>
-            
-            <!-- NÚT TẢI CV: Hãy upload file CV (ví dụ: cv.pdf) vào thư mục code và đổi href="cv.pdf" -->
             <a href="cv.pdf" class="cv-btn" target="_blank">
                 <i class="fas fa-download" style="margin-right: 8px;"></i> Download CV
             </a>

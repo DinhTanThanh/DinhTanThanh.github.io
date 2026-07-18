@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Portfolio</title>
+    <!-- Font hiện đại phù hợp với phong cách Game Developer -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --header-bg: #161b22;
+            --text-color: #e6edf3;
+            --text-light: #8b949e;
+            --accent-glow: #00f0ff;
+            --accent-purple: #b026ff;
+            --border-color: #30363d;
+        }
+
+        /* Hiệu ứng mượt mà khi load trang */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Header Styling */
+        header {
+            position: relative;
+            background-color: var(--header-bg);
+            text-align: center;
+            padding: 50px 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-bottom: 25px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-glow);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            transition: all 0.3s;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+        }
+        nav {
+            margin-bottom: 15px;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        nav a:hover, nav a.active {
+            color: var(--accent-glow);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+        }
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-glow);
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+        
+        /* Header Right (Contact & Menu) */
+        .header-right {
+            position: absolute;
+            right: 30px;
+            top: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--text-color);
+            text-decoration: none;
+            border: 2px solid var(--text-light);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            transition: all 0.3s;
+        }
+        .contact-btn:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+            border-color: var(--text-color);
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        .menu-btn:hover {
+            color: var(--accent-glow);
+        }
+        
+        /* About Main Section */
+        main.about-section {
+            flex-grow: 1;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            margin-bottom: 70px;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: var(--text-color);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(176, 38, 255, 0.3);
+        }
+
+        p {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* 1. Hero / Hook */
+        .about-hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            background: var(--header-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 60px;
+        }
+        .hero-text h1 {
+            font-size: 48px;
+            margin: 0 0 15px 0;
+            color: var(--accent-glow);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+        .hero-text p {
+            font-size: 20px;
+            color: var(--text-color);
+            margin: 0;
+        }
+        .hero-avatar img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-purple);
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.5);
+            transition: all 0.4s;
+        }
+        .hero-avatar img:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 35px rgba(176, 38, 255, 0.8);
+        }
+
+        /* 3. Core Areas Grid */
+        .core-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .core-card {
+            background: var(--header-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .core-card i {
+            font-size: 40px;
+            color: var(--accent-glow);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+        .core-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+        }
+        .core-card p {
+            font-size: 16px;
+            margin: 0;
+        }
+        .core-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-glow);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.15);
+        }
+
+        /* 4. Philosophy Blockquote */
+        .philosophy {
+            background: linear-gradient(90deg, rgba(176,38,255,0.1) 0%, transparent 100%);
+            border-left: 4px solid var(--accent-purple);
+            padding: 25px 30px;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            font-size: 22px;
+            color: var(--text-color);
+        }
+
+        /* 5. Tools Tags */
+        .tools-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .tool-tag {
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            color: var(--text-light);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        .tool-tag:hover {
+            color: var(--text-color);
+            border-color: var(--accent-glow);
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* 7. Fun Fact */
+        .fun-fact-box {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px dashed var(--accent-glow);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .fun-fact-box:hover {
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        .fun-fact-box p {
+            margin: 0;
+            color: var(--accent-glow);
+            font-weight: 500;
+        }
+
+        /* 8. CTA */
+        .cta-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+        .cta-section h2 {
+            border: none;
+            padding: 0;
+            font-size: 36px;
+            justify-content: center;
+            margin-bottom: 30px;
+            text-shadow: none;
+        }
+        .cta-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--accent-purple), #7a11bb);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 0 20px rgba(176, 38, 255, 0.5);
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.8);
+            background: linear-gradient(45deg, #c04bff, var(--accent-purple));
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: var(--header-bg);
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+        .social-links a {
+            color: var(--text-light);
+            font-size: 28px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .social-links a:hover {
+            color: var(--accent-glow);
+            transform: scale(1.2);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+        }
+        .cv-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: transparent;
+            color: var(--accent-glow);
+            text-decoration: none;
+            border: 1px solid var(--accent-glow);
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+        .cv-btn:hover {
+            background-color: var(--accent-glow);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav a {
+                font-size: 20px;
+                margin: 0 10px;
+            }
+            .header-right {
+                position: static;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            .about-hero {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .hero-text h1 {
+                font-size: 36px;
+            }
+            h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <!-- THAY ĐỔI LOGO: Sửa đường dẫn link hình ảnh trong src="..." -->
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Logo">
+            </a>
+        </div>
+        <nav>
+            <a href="index.html">Portfolio</a>
+            <a href="about.html" class="active">About</a>
+        </nav>
+        <div class="header-right">
+            <a href="#footer-section" class="contact-btn">CONTACT</a>
+            <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- Main About Section -->
+    <main class="about-section">
+        
+        <!-- 1. Hook & Avatar -->
+        <section class="about-hero">
+            <div class="hero-text">
+                <!-- BẠN CÓ THỂ ĐỔI CÂU CHÀO (HOOK) Ở ĐÂY -->
+                <h1>Hi, I'm Đinh Tấn Thành!</h1>
+                <p>Leveling up digital experiences one line of code at a time.</p>
+            </div>
+            <div class="hero-avatar">
+                <!-- THAY ĐỔI ẢNH CHÂN DUNG CỦA BẠN Ở ĐÂY -->
+                <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=400&auto=format&fit=crop" alt="Avatar">
+            </div>
+        </section>
+
+        <!-- 2. Background / Journey -->
+        <section class="background">
+            <h2>My Journey</h2>
+            <!-- SỬA ĐOẠN GIỚI THIỆU BACKGROUND CỦA BẠN Ở ĐÂY -->
+            <p>
+                I started my journey as an IT Student with a profound curiosity for how games and applications bring ideas to life. Over the years, I've transitioned from making small passion projects to developing full-fledged software solutions.
+            </p>
+            <p>
+                Currently, I'm deeply immersed in learning and building across various stacks, constantly pushing my boundaries to become a versatile developer.
+            </p>
+        </section>
+
+        <!-- 3. What I Focus On -->
+        <section class="core-focus">
+            <h2>What I Focus On</h2>
+            <div class="core-grid">
+                <!-- SỬA CÁC LĨNH VỰC BẠN TẬP TRUNG (3-4 CÁI) -->
+                <!-- Card 1 -->
+                <div class="core-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Game Development</h3>
+                    <p>Building interactive and immersive experiences using Unity and C#.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="core-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>App Development</h3>
+                    <p>Crafting cross-platform mobile applications with Flutter & Dart.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="core-card">
+                    <i class="fas fa-server"></i>
+                    <h3>Backend Solutions</h3>
+                    <p>Designing robust databases and logic with Python and SQL Server.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Working Philosophy -->
+        <section class="philosophy-section">
+            <h2>Working Philosophy</h2>
+            <!-- SỬA TRIẾT LÝ LÀM VIỆC CỦA BẠN -->
+            <div class="philosophy">
+                "Code is like art. It's not just about making things work, it's about building scalable, clean, and beautiful systems that others can understand."
+            </div>
+        </section>
+
+        <!-- 5. Tools & Workflow -->
+        <section class="tools">
+            <h2>Tools & Workflow</h2>
+            <!-- SỬA CÁC NGÔN NGỮ/CÔNG CỤ BẠN DÙNG -->
+            <div class="tools-container">
+                <div class="tool-tag"><i class="fab fa-unity"></i> Unity</div>
+                <div class="tool-tag"><i class="fas fa-code"></i> C# & .NET</div>
+                <div class="tool-tag"><i class="fab fa-python"></i> Python</div>
+                <div class="tool-tag"><i class="fas fa-database"></i> SQL Server</div>
+                <div class="tool-tag"><i class="fas fa-mobile"></i> Flutter & Dart</div>
+                <div class="tool-tag"><i class="fab fa-git-alt"></i> Git / GitHub</div>
+            </div>
+        </section>
+
+        <!-- 6. Career Goal -->
+        <section class="career-goal">
+            <h2>Career Goal</h2>
+            <!-- SỬA MỤC TIÊU NGHỀ NGHIỆP CỦA BẠN -->
+            <p>
+                My ultimate goal is to become a Lead Developer at a top-tier tech or gaming studio, architecting systems that entertain and empower millions of users worldwide. I'm always eager to collaborate on challenging projects that force me to level up my skills.
+            </p>
+        </section>
+
+        <!-- 7. Fun Fact -->
+        <section class="fun-fact">
+            <!-- SỬA FUN FACT CỦA BẠN -->
+            <div class="fun-fact-box">
+                <p><i class="fas fa-bolt"></i> Fun Fact: I once stayed awake for 24 hours straight to finish a Game Jam project!</p>
+            </div>
+        </section>
+
+        <!-- 8. CTA -->
+        <section class="cta-section">
+            <!-- SỬA CÂU GỌI HÀNH ĐỘNG CỦA BẠN -->
+            <h2>Ready to start a new co-op campaign?</h2>
+            <!-- THAY ĐỔI LINK EMAIL -->
+            <a href="mailto:your-email@gmail.com" class="cta-btn">Let's Work Together <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <!-- THAY ĐỔI LINK GMAIL: Sửa email của bạn -->
+                <a href="mailto:your-email@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
+                
+                <!-- THAY ĐỔI LINK GITHUB: Sửa href="..." -->
+                <a href="https://github.com/DinhTanThanh" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                
+                <!-- THAY ĐỔI LINK LINKEDIN: Sửa href="..." -->
+                <a href="https://linkedin.com/in/your-username" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                
+                <!-- THAY ĐỔI LINK ITCH.IO: Sửa href="..." -->
+                <a href="https://your-username.itch.io" target="_blank" title="itch.io"><i class="fab fa-itch-io"></i></a>
+            </div>
+            
+            <!-- NÚT TẢI CV -->
+            <a href="cv.pdf" class="cv-btn" target="_blank">
+                <i class="fas fa-download" style="margin-right: 8px;"></i> Download CV
+            </a>
+        </div>
+    </footer>
+
+</body>
+</html>
