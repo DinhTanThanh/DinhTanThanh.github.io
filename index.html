@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đinh Tấn Thành - Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --accent-color: #00ffcc;
+            --card-bg: #1e1e1e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .portfolio-card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+        .portfolio-card h1 {
+            margin: 0 0 10px 0;
+            font-size: 32px;
+        }
+        .portfolio-card h2 {
+            margin: 0 0 25px 0;
+            font-size: 18px;
+            color: var(--accent-color);
+            font-weight: 400;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .skill-tag {
+            background-color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .description {
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #cccccc;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: #121212;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #00ccaa;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portfolio-card">
+        <h1>Đinh Tấn Thành</h1>
+        <h2>Software Developer | IT Student</h2>
+        
+        <div class="skills">
+            <span class="skill-tag">C# & .NET</span>
+            <span class="skill-tag">Flutter & Dart</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">SQL Server</span>
+            <span class="skill-tag">Unity</span>
+        </div>
+
+        <p class="description">Chào mừng bạn đến với không gian cá nhân của tôi. Trang web này đang được chạy thử nghiệm và lưu trữ hoàn toàn miễn phí trên nền tảng GitHub Pages.</p>
+        
+        <a href="https://github.com/DinhTanThanh" class="btn" target="_blank">Truy cập GitHub</a>
+    </div>
+
+</body>
+</html>
