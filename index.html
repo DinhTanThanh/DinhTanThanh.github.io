@@ -3,339 +3,789 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <!-- Font hiện đại phù hợp với phong cách Game Developer -->
+    <title>Portfolio - Game Developer</title>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome cho các icon mạng xã hội -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #0d1117;
-            --header-bg: #161b22;
-            --text-color: #e6edf3;
-            --text-light: #8b949e;
-            --accent-glow: #00f0ff;
-            --accent-purple: #b026ff;
-            --border-color: #30363d;
+            --bg-base: #050505;
+            --bg-surface: rgba(20, 20, 25, 0.7);
+            --text-main: #f0f4f8;
+            --text-muted: #8b949e;
+            --cyan-glow: #00f0ff;
+            --purple-glow: #b026ff;
+            --border-glass: rgba(255, 255, 255, 0.05);
+            --border-glow: rgba(0, 240, 255, 0.3);
         }
-        
-        /* Hiệu ứng mượt mà khi load trang */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Outfit', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            animation: fadeIn 0.8s ease-out forwards;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(176, 38, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.08), transparent 25%);
+            background-attachment: fixed;
         }
-        
+
+        /* Ambient Animated Background Blob */
+        .ambient-blob {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.03) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulse 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
         /* Header Styling */
         header {
-            position: relative;
-            background-color: var(--header-bg);
-            text-align: center;
-            padding: 50px 20px 30px;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            box-sizing: border-box;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glass);
         }
+
         .logo img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            margin-bottom: 25px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            border: 2px solid var(--accent-glow);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            border: 2px solid var(--cyan-glow);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
             transition: all 0.3s;
         }
+
         .logo img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px var(--cyan-glow);
         }
+
         nav {
-            margin-bottom: 15px;
+            display: flex;
+            gap: 30px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
+
         nav a {
             text-decoration: none;
-            color: var(--text-light);
-            font-size: 24px;
-            font-weight: 500;
-            margin: 0 15px;
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             transition: all 0.3s;
             position: relative;
         }
-        nav a:hover, nav a.active {
-            color: var(--accent-glow);
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+
+        nav a:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 8px var(--cyan-glow);
         }
-        nav a.active::after {
+
+        nav a::after {
             content: '';
             position: absolute;
             bottom: -5px;
             left: 0;
-            width: 100%;
+            width: 0%;
             height: 2px;
-            background-color: var(--accent-glow);
-            box-shadow: 0 0 8px var(--accent-glow);
-        }
-        
-        /* Main Portfolio Grid */
-        main {
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .portfolio-item {
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            border-radius: 12px;
-            background-color: var(--header-bg);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .portfolio-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--accent-purple);
-            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.2);
-        }
-        .portfolio-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.4s;
-        }
-        .portfolio-item:hover img {
-            filter: brightness(1.1);
-        }
-        .portfolio-item h3 {
-            margin: 20px 0;
-            font-size: 20px;
-            color: var(--text-color);
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        .portfolio-item:hover h3 {
-            color: var(--accent-purple);
-            text-shadow: 0 0 10px rgba(176, 38, 255, 0.4);
-        }
-        
-        /* Footer Styling */
-        footer {
-            background-color: var(--header-bg);
-            text-align: center;
-            padding: 50px 20px;
-            border-top: 1px solid var(--border-color);
-            margin-top: 80px;
-        }
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-        }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-        }
-        .social-links a {
-            color: var(--text-light);
-            font-size: 28px;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-        .social-links a:hover {
-            color: var(--accent-glow);
-            transform: scale(1.2);
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
-        }
-        .cv-btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: transparent;
-            color: var(--accent-glow);
-            text-decoration: none;
-            border: 1px solid var(--accent-glow);
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            font-family: inherit;
-            transition: all 0.3s;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-        .cv-btn:hover {
-            background-color: var(--accent-glow);
-            color: var(--bg-color);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+            background-color: var(--cyan-glow);
+            box-shadow: 0 0 8px var(--cyan-glow);
+            transition: width 0.3s ease;
         }
 
-        /* Header Right (Contact & Menu) */
+        nav a:hover::after {
+            width: 100%;
+        }
+
         .header-right {
-            position: absolute;
-            right: 30px;
-            top: 50px;
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
         .contact-btn {
-            display: inline-block;
-            padding: 10px 20px;
+            padding: 8px 24px;
             background: transparent;
-            color: var(--text-color);
-            text-decoration: none;
-            border: 2px solid var(--text-light);
-            border-radius: 4px;
-            font-size: 14px;
+            color: var(--cyan-glow);
+            border: 1px solid var(--cyan-glow);
+            border-radius: 30px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
             transition: all 0.3s;
+            box-shadow: inset 0 0 0 rgba(0, 240, 255, 0), 0 0 10px rgba(0, 240, 255, 0.2);
         }
+
         .contact-btn:hover {
-            background: var(--text-color);
-            color: var(--bg-color);
-            border-color: var(--text-color);
+            background: var(--cyan-glow);
+            color: var(--bg-base);
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(0, 240, 255, 0.6);
         }
 
         .menu-btn {
+            display: none;
             background: transparent;
             border: none;
-            color: var(--text-color);
-            font-size: 28px;
+            color: var(--text-main);
+            font-size: 24px;
             cursor: pointer;
-            padding: 0;
+        }
+
+        /* Layout Container */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 0; /* offset for fixed header */
+        }
+
+        section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: sectionFadeUp 0.8s forwards;
+            animation-delay: 0.2s;
+            scroll-margin-top: 100px;
+        }
+
+        @keyframes sectionFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 60px;
+            background: linear-gradient(to right, var(--text-main), var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .section-title span {
+            background: linear-gradient(to right, var(--cyan-glow), var(--purple-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Projects Section Header Structure */
+        .projects-header {
+            margin-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sub-heading {
             display: flex;
             align-items: center;
-            transition: color 0.3s;
-        }
-        .menu-btn:hover {
-            color: var(--accent-glow);
+            justify-content: center;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        /* Home Hero Section */
+        .sub-heading .line {
+            width: 40px;
+            height: 2px;
+            background: var(--text-muted);
+        }
+
+        .section-title.projects-title {
+            margin-bottom: 0;
+            text-transform: none; /* Allows Title Case */
+            font-size: 56px;
+        }
+
+        /* Hero Section */
         .home-hero {
+            padding-top: 20px;
+            padding-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            padding: 40px 20px 60px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .home-hero h1 {
-            font-size: 48px;
-            margin: 0 0 10px 0;
-            color: var(--text-color);
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
-        .home-hero h1 span {
-            color: var(--accent-glow);
-        }
-        .home-hero h2 {
-            font-size: 24px;
-            color: var(--accent-purple);
-            margin: 0 0 20px 0;
-            font-weight: 500;
-        }
-        .home-hero p {
-            font-size: 18px;
-            color: var(--text-light);
-            line-height: 1.6;
+            position: relative;
         }
 
-        /* Responsive */
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(176, 38, 255, 0.1);
+            border: 1px solid rgba(176, 38, 255, 0.3);
+            border-radius: 20px;
+            color: var(--purple-glow);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(176, 38, 255, 0.2);
+        }
+
+        .home-hero h1 {
+            font-size: 64px;
+            font-weight: 900;
+            margin: 0 0 20px 0;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .home-hero h1 span {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--cyan-glow);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .home-hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding: 15px 35px;
+            background: linear-gradient(45deg, var(--cyan-glow), var(--purple-glow));
+            color: var(--bg-base);
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(176, 38, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.4);
+            filter: brightness(1.2);
+        }
+
+        .btn-secondary {
+            padding: 15px 35px;
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-glass);
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cyan-glow);
+            color: var(--cyan-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.1);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .about-text, .about-skills {
+            padding: 40px;
+        }
+
+        .about-text h3, .about-skills h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 0;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .about-text h3 i, .about-skills h3 i {
+            color: var(--purple-glow);
+        }
+
+        .about-text p {
+            font-size: 17px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .philosophy {
+            margin-top: 30px;
+            padding: 20px 20px 20px 25px;
+            border-left: 3px solid var(--cyan-glow);
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.05), transparent);
+            font-style: italic;
+            font-size: 18px;
+            color: var(--text-main);
+        }
+
+        .tools-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .tool-tag {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .tool-tag:hover {
+            color: var(--text-main);
+            border-color: var(--purple-glow);
+            background: rgba(176, 38, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(176, 38, 255, 0.2);
+        }
+
+        .fun-fact-box {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(176, 38, 255, 0.05));
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .fun-fact-box i {
+            font-size: 32px;
+            color: var(--cyan-glow);
+        }
+
+        .fun-fact-box p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .fun-fact-box p span {
+            font-weight: 700;
+            color: var(--purple-glow);
+        }
+
+        /* Core Focus Grid */
+        .core-focus-section {
+            margin-top: 60px;
+        }
+
+        .core-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .core-card {
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .core-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan-glow), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .core-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .core-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan-glow);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.1);
+        }
+
+        .core-card i {
+            font-size: 48px;
+            background: linear-gradient(45deg, var(--cyan-glow), var(--purple-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .core-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        .core-card p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            cursor: pointer;
+            border: 1px solid var(--border-glass);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0.4) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            border-color: var(--purple-glow);
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.2);
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ptag {
+            font-size: 12px;
+            padding: 4px 10px;
+            background: rgba(0, 240, 255, 0.2);
+            color: var(--cyan-glow);
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 100px;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-glass);
+            background: linear-gradient(to bottom, transparent, rgba(5,5,5,0.8));
+            position: relative;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            font-size: 20px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--bg-base);
+            background: var(--cyan-glow);
+            border-color: var(--cyan-glow);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            .core-grid {
+                grid-template-columns: 1fr;
+            }
+            .home-hero h1 {
+                font-size: 48px;
+            }
+        }
+
         @media (max-width: 768px) {
-            nav a {
-                font-size: 20px;
-                margin: 0 10px;
+            header {
+                padding: 15px 20px;
+            }
+            nav {
+                display: none; /* Can add a hamburger menu later */
             }
             .header-right {
-                position: static;
-                justify-content: center;
-                margin-top: 20px;
+                display: none;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .cta-group {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Section -->
+    <div class="ambient-blob"></div>
+
     <header>
         <div class="logo">
-            <!-- THAY ĐỔI LOGO: Sửa đường dẫn link hình ảnh trong src="..." -->
             <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Logo">
         </div>
         <nav>
-            <a href="index.html" class="active">Portfolio</a>
-            <a href="about.html">About</a>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
         </nav>
         <div class="header-right">
-            <a href="#footer-section" class="contact-btn">CONTACT</a>
-            <button class="menu-btn"><i class="fas fa-bars"></i></button>
+            <a href="#footer-section" class="contact-btn">Contact</a>
         </div>
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- Main Content Section -->
     <main>
-        <!-- Home Hero Section -->
-        <section class="home-hero">
-            <!-- THAY ĐỔI TÊN CỦA BẠN -->
-            <h1>Hi, I'm <span>Đinh Tấn Thành</span></h1>
-            <!-- THAY ĐỔI VỊ TRÍ/CHỨC DANH CỦA BẠN -->
-            <h2>Unity Game Developer</h2>
-            <!-- THAY ĐỔI ĐOẠN GIỚI THIỆU NGẮN CỦA BẠN -->
-            <p>I am a passionate Unity Game Developer with a strong focus on creating immersive gameplay mechanics and optimized systems. I love turning creative concepts into engaging digital experiences. Below are some of my highlighted projects.</p>
-        </section>
-        <div class="grid">
-            <!-- PROJECT 1 -->
-            <!-- Link tới trang chi tiết của dự án -->
-            <a href="project-detail.html" class="portfolio-item">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Project 1">
-                <h3>Chimp tee</h3>
-            </a>
+        <!-- Hero Section -->
+        <section id="home" class="home-hero">
+            <h1><span>Đinh Tấn Thành</span></h1>
+            <h2 style="color: var(--text-main); font-size: 28px; font-weight: 300; letter-spacing: 4px; margin-bottom: 25px; text-transform: uppercase;">Unity Game Developer</h2>
+            <p>Third-year Information Technology student passionate about Unity game development. I enjoy transforming game ideas into polished gameplay experiences through clean C# architecture, gameplay systems, UI, and performance optimization.</p>
             
-            <!-- BẠN CÓ THỂ COPY 1 KHỐI <a class="portfolio-item">...</a> VÀ DÁN XUỐNG ĐÂY ĐỂ THÊM DỰ ÁN MỚI -->
-        </div>
+            <div class="cta-group">
+                <a href="#projects" class="btn-primary">Explore My Games <i class="fas fa-gamepad" style="margin-left: 8px;"></i></a>
+                <a href="#about" class="btn-secondary">View Profile <i class="fas fa-user" style="margin-left: 8px;"></i></a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2 class="section-title">A little <span>about me</span></h2>
+            
+            <div class="about-content">
+                <div class="glass-panel about-text">
+                    <h3><i class="fas fa-user-astronaut"></i> About Me</h3>
+                    <p>Through developing my solo project, I gained hands-on experience designing gameplay systems, enemy AI, inventory mechanics, UI, scene management, and performance optimization. I enjoy writing clean, maintainable C# code and solving gameplay problems through thoughtful system design.</p>
+                </div>
+
+                <div class="glass-panel about-skills">
+                    <h3><i class="fas fa-microchip"></i> Technical Skills</h3>
+                    <div class="tools-container">
+                        <div class="tool-tag"><i class="fab fa-unity"></i> Unity</div>
+                        <div class="tool-tag"><i class="fas fa-code"></i> C#</div>
+			<div class="tool-tag"><i class="fab fa-git-alt"></i> Git & GitHub</div>
+                        <div class="tool-tag"><i class="fas fa-search-dollar"></i> Unity Profiler</div>
+                        <div class="tool-tag"><i class="fas fa-running"></i> Animator</div>
+                        <div class="tool-tag"><i class="fas fa-layer-group"></i> Object Pooling</div>
+                        <div class="tool-tag"><i class="fas fa-file-code"></i> ScriptableObject</div>
+                    </div>
+                    <div class="philosophy" style="margin-top: 25px;">
+                        "Great gameplay isn't just about mechanics—it's about creating experiences players want to come back to."
+                    </div>
+                </div>
+            </div>
+
+            <div class="core-focus-section">
+                <div class="core-grid">
+                    <div class="glass-panel core-card">
+                        <i class="fas fa-gamepad"></i>
+                        <h4>Gameplay Development</h4>
+                        <p>Designing and implementing engaging gameplay mechanics, player controls, combat systems, and game logic using Unity and C#.</p>
+                    </div>
+                    <div class="glass-panel core-card">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>AI & Game Systems</h4>
+                        <p>Building enemy AI, boss behaviors, inventory systems, UI, and reusable gameplay systems for immersive player experiences.</p>
+                    </div>
+                    <div class="glass-panel core-card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Performance Optimization</h4>
+                        <p>Improving game performance through Object Pooling, Unity Profiler analysis, and clean, maintainable C# architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="projects-header">
+                <div class="sub-heading"><span class="line"></span> SELECTED WORK</div>
+                <h2 class="section-title projects-title">Games & <span>Projects</span></h2>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <a href="project-detail.html" style="text-decoration: none;">
+                    <div class="project-card">
+                        <img src="SpaceShip/PosterSpaceShip/Poster_SpaceShip.jpeg" alt="SpaceShip Project" class="project-img">
+                        <div class="project-overlay">
+                            <h3 class="project-title">Space Ship</h3>
+                            <div class="project-tags">
+                                <span class="ptag">Unity</span>
+                                <span class="ptag">C#</span>
+                                <span class="ptag">2D</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- BẠN CÓ THỂ COPY KHỐI <a ...> <div class="project-card">...</div> </a> XUỐNG ĐÂY ĐỂ THÊM DỰ ÁN MỚI -->
+            </div>
+        </section>
     </main>
 
-    <!-- Footer Section (Phần cuối trang) -->
+    <!-- Footer Section -->
     <footer id="footer-section">
         <div class="footer-content">
             <div class="social-links">
-                <!-- THAY ĐỔI LINK GMAIL: Sửa email của bạn -->
-                <a href="mailto:your-email@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
-
-                <!-- THAY ĐỔI LINK GITHUB: Sửa href="..." -->
-                <a href="https://github.com/DinhTanThanh" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                
-                <!-- THAY ĐỔI LINK LINKEDIN: Sửa href="..." -->
-                <a href="https://linkedin.com/in/your-username" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                
-                <!-- THAY ĐỔI LINK ITCH.IO: Sửa href="..." -->
-                <a href="https://your-username.itch.io" target="_blank" title="itch.io"><i class="fab fa-itch-io"></i></a>
+                <a href="mailto:your-email@gmail.com" target="_blank" class="social-link" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/DinhTanThanh" target="_blank" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/your-username" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://your-username.itch.io" target="_blank" class="social-link" title="itch.io"><i class="fab fa-itch-io"></i></a>
             </div>
             
-            <!-- NÚT TẢI CV: Hãy upload file CV (ví dụ: cv.pdf) vào thư mục code và đổi href="cv.pdf" -->
-            <a href="cv.pdf" class="cv-btn" target="_blank">
-                <i class="fas fa-download" style="margin-right: 8px;"></i> Download CV
+            <a href="cv.pdf" class="btn-primary" target="_blank" style="padding: 12px 30px; font-size: 14px;">
+                <i class="fas fa-download" style="margin-right: 8px;"></i> Download Resume
             </a>
+            
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;">
+                © 2026 Đinh Tấn Thành
+            </p>
         </div>
     </footer>
 
