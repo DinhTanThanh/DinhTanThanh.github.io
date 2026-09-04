@@ -1,4 +1,4 @@
-F<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -6,30 +6,41 @@ F<!DOCTYPE html>
     <title>Đinh Tấn Thành — Unity Game Developer & C# Architect</title>
     <meta name="description" content="Portfolio of Đinh Tấn Thành - Unity Game Developer specializing in gameplay systems, enemy AI, C# architecture, and performance optimization.">
     
-    <!-- Modern Artistic Google Fonts: Syne + Outfit + JetBrains Mono -->
+    <!-- Modern Google Fonts: Syne + Outfit + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         :root {
-            --bg-base: #07090e;
-            --bg-surface: rgba(14, 18, 28, 0.65);
-            --bg-surface-elevated: rgba(22, 28, 44, 0.75);
-            --text-main: #f0f4fc;
-            --text-muted: #94a3b8;
+            --bg-base: #06080e;
+            --bg-surface: rgba(13, 17, 28, 0.7);
+            --bg-surface-card: rgba(18, 24, 38, 0.65);
+            --bg-surface-elevated: rgba(24, 32, 52, 0.85);
+            
+            --text-main: #f3f6fc;
+            --text-muted: #9ba8bd;
             --text-dim: #64748b;
+            
             --cyan-glow: #00f5ff;
             --cyan-glow-dim: rgba(0, 245, 255, 0.15);
             --purple-glow: #a855f7;
             --purple-glow-dim: rgba(168, 85, 247, 0.15);
             --rose-glow: #f43f5e;
             --emerald-glow: #10b981;
+            --amber-glow: #f59e0b;
+            
             --border-glass: rgba(255, 255, 255, 0.08);
-            --border-glass-bright: rgba(255, 255, 255, 0.2);
+            --border-glass-bright: rgba(255, 255, 255, 0.18);
             --border-glow: rgba(0, 245, 255, 0.35);
-            --glow-shadow: 0 0 35px rgba(0, 245, 255, 0.15);
+            
+            --gradient-accent: linear-gradient(135deg, #00f5ff 0%, #38bdf8 45%, #a855f7 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            --glow-shadow: 0 0 35px rgba(0, 245, 255, 0.2);
+            --radius-xl: 24px;
+            --radius-lg: 18px;
+            --radius-md: 12px;
         }
 
         * {
@@ -53,18 +64,31 @@ F<!DOCTYPE html>
             cursor: default;
         }
 
+        /* Top Scroll Progress Indicator */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            width: 0%;
+            z-index: 10000;
+            box-shadow: 0 0 10px var(--cyan-glow);
+            transition: width 0.1s ease-out;
+        }
+
         /* Ambient Cursor Light Follower */
         .cursor-glow {
             position: fixed;
-            width: 550px;
-            height: 550px;
+            width: 580px;
+            height: 580px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.07) 0%, rgba(168, 85, 247, 0.04) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.08) 0%, rgba(168, 85, 247, 0.05) 45%, transparent 70%);
             pointer-events: none;
             z-index: -1;
             transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, opacity 0.3s;
             mix-blend-mode: screen;
+            will-change: transform, left, top;
         }
 
         /* Interactive Ambient Canvas */
@@ -78,15 +102,15 @@ F<!DOCTYPE html>
             pointer-events: none;
         }
 
-        /* Decorative Fluid Mesh Blurs */
+        /* Ambient Fluid Glow Orbs */
         .ambient-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(140px);
             z-index: -3;
             pointer-events: none;
-            opacity: 0.55;
-            animation: orbFloat 22s infinite alternate ease-in-out;
+            opacity: 0.6;
+            animation: orbFloat 24s infinite alternate ease-in-out;
         }
 
         .ambient-orb-1 {
@@ -94,7 +118,7 @@ F<!DOCTYPE html>
             height: 60vw;
             top: -15%;
             left: -10%;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(126, 34, 206, 0.1) 70%, transparent 100%);
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(126, 34, 206, 0.08) 70%, transparent 100%);
         }
 
         .ambient-orb-2 {
@@ -102,19 +126,19 @@ F<!DOCTYPE html>
             height: 55vw;
             bottom: -15%;
             right: -10%;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.35) 0%, rgba(3, 105, 161, 0.1) 70%, transparent 100%);
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.3) 0%, rgba(3, 105, 161, 0.08) 70%, transparent 100%);
             animation-duration: 28s;
             animation-delay: -7s;
         }
 
         .ambient-orb-3 {
-            width: 40vw;
-            height: 40vw;
-            top: 40%;
-            left: 30%;
-            background: radial-gradient(circle, rgba(244, 63, 94, 0.2) 0%, transparent 70%);
+            width: 45vw;
+            height: 45vw;
+            top: 45%;
+            left: 25%;
+            background: radial-gradient(circle, rgba(244, 63, 94, 0.16) 0%, transparent 70%);
             animation-duration: 32s;
-            animation-delay: -12s;
+            animation-delay: -14s;
         }
 
         @keyframes orbFloat {
@@ -137,9 +161,9 @@ F<!DOCTYPE html>
 
         .meteor {
             position: absolute;
-            width: 140px;
+            width: 150px;
             height: 1.5px;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(0, 245, 255, 0.6), transparent);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(0, 245, 255, 0.6), transparent);
             transform: rotate(225deg);
             opacity: 0;
             filter: drop-shadow(0 0 6px rgba(0, 245, 255, 0.8));
@@ -165,21 +189,21 @@ F<!DOCTYPE html>
             100% { transform: rotate(225deg) translateX(-140vw); opacity: 0; }
         }
 
-        /* Glassmorphism System */
+        /* Glassmorphism Panel Tokens */
         .glass-panel {
             background: var(--bg-surface);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            backdrop-filter: blur(24px) saturate(170%);
+            -webkit-backdrop-filter: blur(24px) saturate(170%);
             border: 1px solid var(--border-glass);
-            border-radius: 20px;
+            border-radius: var(--radius-xl);
             box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 20px 40px -15px rgba(0, 0, 0, 0.6);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
             position: relative;
         }
 
         .glass-panel:hover {
-            border-color: rgba(255, 255, 255, 0.16);
-            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15), 0 25px 50px -15px rgba(0, 0, 0, 0.7);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.16), 0 25px 50px -15px rgba(0, 0, 0, 0.7);
         }
 
         /* Typography & Artistic Headings */
@@ -192,7 +216,7 @@ F<!DOCTYPE html>
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Floating Artistic Header */
+        /* Floating Modern Dynamic Header */
         header {
             position: fixed;
             top: 20px;
@@ -204,13 +228,13 @@ F<!DOCTYPE html>
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 28px;
-            background: rgba(10, 14, 23, 0.7);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 24px;
+            background: rgba(10, 14, 24, 0.75);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 50px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
             transition: all 0.3s ease;
         }
 
@@ -223,27 +247,27 @@ F<!DOCTYPE html>
         }
 
         .logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--cyan-glow), var(--purple-glow));
+            background: var(--gradient-accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 17px;
             color: #05070c;
             font-weight: 900;
-            box-shadow: 0 0 18px rgba(0, 245, 255, 0.4);
-            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .logo-badge:hover .logo-icon {
-            transform: rotate(12deg) scale(1.08);
+            transform: rotate(12deg) scale(1.1);
         }
 
         .logo-text {
             font-family: 'Syne', sans-serif;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 800;
             letter-spacing: 0.5px;
             background: linear-gradient(90deg, #ffffff, #cbd5e1);
@@ -260,7 +284,7 @@ F<!DOCTYPE html>
         nav a {
             text-decoration: none;
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -271,7 +295,7 @@ F<!DOCTYPE html>
 
         nav a:hover, nav a.active {
             color: var(--text-main);
-            text-shadow: 0 0 12px var(--cyan-glow);
+            text-shadow: 0 0 14px var(--cyan-glow);
         }
 
         nav a::after {
@@ -282,9 +306,9 @@ F<!DOCTYPE html>
             transform: translateX(-50%);
             width: 0%;
             height: 2px;
-            background: linear-gradient(90deg, var(--cyan-glow), var(--purple-glow));
-            box-shadow: 0 0 8px var(--cyan-glow);
-            transition: width 0.3s ease;
+            background: var(--gradient-accent);
+            box-shadow: 0 0 10px var(--cyan-glow);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             border-radius: 2px;
         }
 
@@ -295,7 +319,7 @@ F<!DOCTYPE html>
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .status-pill {
@@ -323,16 +347,16 @@ F<!DOCTYPE html>
 
         @keyframes pulseDot {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.6; }
+            50% { transform: scale(1.3); opacity: 0.5; }
         }
 
         .contact-btn {
-            padding: 8px 22px;
+            padding: 8px 20px;
             background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(168, 85, 247, 0.15));
             color: #ffffff;
             border: 1px solid rgba(0, 245, 255, 0.4);
             border-radius: 30px;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -344,9 +368,9 @@ F<!DOCTYPE html>
         }
 
         .contact-btn:hover {
-            background: linear-gradient(135deg, var(--cyan-glow), var(--purple-glow));
+            background: var(--gradient-accent);
             color: #07090e;
-            box-shadow: 0 0 25px rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 25px rgba(0, 245, 255, 0.55);
             transform: translateY(-2px);
             border-color: transparent;
         }
@@ -373,27 +397,27 @@ F<!DOCTYPE html>
         .mobile-drawer {
             position: fixed;
             top: 85px;
-            left: 24px;
-            right: 24px;
-            background: rgba(14, 18, 30, 0.95);
-            backdrop-filter: blur(25px);
+            left: 20px;
+            right: 20px;
+            background: rgba(12, 16, 28, 0.96);
+            backdrop-filter: blur(28px);
             border: 1px solid var(--border-glass-bright);
             border-radius: 20px;
             padding: 24px;
             display: none;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             z-index: 999;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85);
         }
 
         .mobile-drawer.open {
             display: flex;
-            animation: drawerIn 0.3s ease forwards;
+            animation: drawerIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes drawerIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -402,7 +426,7 @@ F<!DOCTYPE html>
             text-decoration: none;
             font-size: 16px;
             font-weight: 600;
-            padding: 10px 16px;
+            padding: 12px 16px;
             border-radius: 12px;
             transition: all 0.2s ease;
             display: flex;
@@ -415,36 +439,36 @@ F<!DOCTYPE html>
             color: var(--cyan-glow);
         }
 
-        /* Layout Container */
+        /* Main Container */
         main {
-            max-width: 1200px;
+            max-width: 1220px;
             margin: 0 auto;
             padding: 120px 24px 40px;
         }
 
         section {
-            padding: 80px 0;
-            scroll-margin-top: 100px;
+            padding: 85px 0;
+            scroll-margin-top: 90px;
         }
 
         /* Section Titles */
         .section-header-block {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 55px;
             position: relative;
         }
 
         .section-tag {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             padding: 6px 18px;
             border-radius: 30px;
             background: rgba(0, 245, 255, 0.08);
             border: 1px solid rgba(0, 245, 255, 0.25);
             color: var(--cyan-glow);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -452,10 +476,10 @@ F<!DOCTYPE html>
         }
 
         .section-title {
-            font-size: 44px;
+            font-size: 46px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -463,7 +487,7 @@ F<!DOCTYPE html>
         }
 
         .section-title span {
-            background: linear-gradient(135deg, var(--cyan-glow), var(--purple-glow));
+            background: var(--gradient-accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 25px rgba(0, 245, 255, 0.3);
@@ -472,14 +496,14 @@ F<!DOCTYPE html>
         .section-subtitle {
             font-size: 17px;
             color: var(--text-muted);
-            max-width: 620px;
+            max-width: 640px;
             margin: 0 auto;
             line-height: 1.7;
         }
 
-        /* Hero Section */
+        /* ==================== HERO SECTION ==================== */
         .hero-section {
-            padding: 40px 0 90px;
+            padding: 50px 0 90px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -517,11 +541,11 @@ F<!DOCTYPE html>
             line-height: 1.08;
             margin-bottom: 18px;
             letter-spacing: -2px;
-            max-width: 950px;
+            max-width: 980px;
         }
 
         .hero-title .name-highlight {
-            background: linear-gradient(135deg, #ffffff 0%, #00f5ff 50%, #a855f7 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #00f5ff 45%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 35px rgba(0, 245, 255, 0.35);
@@ -530,7 +554,7 @@ F<!DOCTYPE html>
 
         .hero-role {
             font-family: 'Syne', sans-serif;
-            font-size: 24px;
+            font-size: 23px;
             font-weight: 700;
             letter-spacing: 4px;
             text-transform: uppercase;
@@ -539,12 +563,12 @@ F<!DOCTYPE html>
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
+            gap: 16px;
         }
 
         .hero-role::before, .hero-role::after {
             content: '';
-            width: 30px;
+            width: 32px;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--cyan-glow));
         }
@@ -556,9 +580,9 @@ F<!DOCTYPE html>
         .hero-desc {
             font-size: 19px;
             color: #cbd5e1;
-            max-width: 680px;
+            max-width: 720px;
             line-height: 1.75;
-            margin-bottom: 42px;
+            margin-bottom: 40px;
             font-weight: 400;
         }
 
@@ -573,18 +597,18 @@ F<!DOCTYPE html>
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 50px;
+            margin-bottom: 45px;
         }
 
         .btn-artistic-primary {
             position: relative;
             padding: 16px 40px;
-            background: linear-gradient(135deg, var(--cyan-glow) 0%, #38bdf8 50%, var(--purple-glow) 100%);
+            background: var(--gradient-accent);
             color: #05070d;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 14.5px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.8px;
             border: none;
             border-radius: 40px;
             cursor: pointer;
@@ -604,7 +628,7 @@ F<!DOCTYPE html>
             left: -100%;
             width: 60%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
             transform: skewX(-25deg);
             transition: 0.6s;
         }
@@ -625,14 +649,14 @@ F<!DOCTYPE html>
             color: var(--text-main);
             border: 1px solid var(--border-glass-bright);
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14.5px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.8px;
             border-radius: 40px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
             display: inline-flex;
             align-items: center;
             gap: 12px;
@@ -646,20 +670,20 @@ F<!DOCTYPE html>
             box-shadow: 0 10px 25px rgba(0, 245, 255, 0.2);
         }
 
-        /* Hero Highlight Stats Cards */
+        /* Hero Quick Bento Stats */
         .hero-stats-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .stat-card {
             padding: 24px 20px;
             text-align: center;
-            border-radius: 18px;
-            background: rgba(14, 18, 30, 0.5);
+            border-radius: var(--radius-lg);
+            background: rgba(14, 18, 30, 0.55);
             border: 1px solid var(--border-glass);
             position: relative;
             overflow: hidden;
@@ -668,15 +692,16 @@ F<!DOCTYPE html>
 
         .stat-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(0, 245, 255, 0.3);
-            background: rgba(20, 26, 44, 0.7);
+            border-color: rgba(0, 245, 255, 0.35);
+            background: rgba(20, 26, 44, 0.75);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.12);
         }
 
         .stat-number {
             font-family: 'Syne', sans-serif;
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--cyan-glow), var(--purple-glow));
+            background: var(--gradient-accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 4px;
@@ -690,31 +715,39 @@ F<!DOCTYPE html>
             letter-spacing: 1px;
         }
 
-        /* About Section Layout */
-        .about-grid {
+        /* ==================== BENTO ABOUT SECTION ==================== */
+        .bento-grid {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 32px;
-            align-items: stretch;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 28px;
+            margin-bottom: 24px;
         }
 
-        .about-card {
-            padding: 44px;
+        .bento-card-bio {
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+        }
+
+        .bento-card-specs {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: radial-gradient(circle at top right, rgba(0, 245, 255, 0.08) 0%, rgba(14, 18, 30, 0.8) 100%);
         }
 
         .card-header-artistic {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
         .card-header-icon {
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             border-radius: 14px;
             background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(168, 85, 247, 0.15));
             border: 1px solid rgba(0, 245, 255, 0.3);
@@ -762,15 +795,14 @@ F<!DOCTYPE html>
         }
 
         .philosophy-banner {
-            padding: 20px 24px;
+            padding: 18px 22px;
             border-left: 4px solid var(--purple-glow);
             background: linear-gradient(90deg, rgba(168, 85, 247, 0.12), transparent);
             border-radius: 0 14px 14px 0;
-            font-size: 16px;
+            font-size: 15.5px;
             font-style: italic;
             color: #e2e8f0;
             line-height: 1.6;
-            position: relative;
         }
 
         .philosophy-banner i {
@@ -779,85 +811,63 @@ F<!DOCTYPE html>
             margin-right: 8px;
         }
 
-        /* Tech Arsenal & Skill Badges */
-        .skills-container {
+        /* Specs List for Quick Developer Profile */
+        .specs-list {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
-        .skill-category-title {
-            font-size: 13px;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            margin-bottom: 10px;
+        .spec-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .skill-category-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-glass);
-        }
-
-        .skill-tags-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 18px;
+            justify-content: space-between;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-glass);
             border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #cbd5e1;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
-        .skill-badge i {
-            font-size: 16px;
-            color: var(--cyan-glow);
-            transition: transform 0.3s ease;
-        }
-
-        .skill-badge:hover {
-            color: #ffffff;
+        .spec-item:hover {
             border-color: var(--cyan-glow);
-            background: rgba(0, 245, 255, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 18px rgba(0, 245, 255, 0.2);
+            background: rgba(0, 245, 255, 0.05);
+            transform: translateX(4px);
         }
 
-        .skill-badge:hover i {
-            transform: scale(1.2);
+        .spec-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .spec-label i {
+            color: var(--cyan-glow);
+            width: 18px;
+            text-align: center;
+        }
+
+        .spec-val {
+            font-size: 14px;
+            font-weight: 700;
             color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         /* Core Focus Architectural Cards */
-        .core-focus-section {
-            margin-top: 40px;
-        }
-
         .core-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 28px;
+            gap: 24px;
+            margin-top: 30px;
         }
 
         .core-card {
             padding: 36px 30px;
-            border-radius: 20px;
+            border-radius: var(--radius-xl);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -873,7 +883,7 @@ F<!DOCTYPE html>
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--cyan-glow), var(--purple-glow), transparent);
+            background: var(--gradient-accent);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
         }
@@ -884,7 +894,7 @@ F<!DOCTYPE html>
 
         .core-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(0, 245, 255, 0.3);
+            border-color: rgba(0, 245, 255, 0.35);
             box-shadow: 0 20px 40px rgba(0, 245, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
@@ -905,7 +915,7 @@ F<!DOCTYPE html>
 
         .core-card:hover .core-icon-box {
             transform: scale(1.1) rotate(5deg);
-            background: linear-gradient(135deg, var(--cyan-glow), var(--purple-glow));
+            background: var(--gradient-accent);
             color: #07090e;
             box-shadow: 0 0 25px rgba(0, 245, 255, 0.4);
         }
@@ -923,7 +933,99 @@ F<!DOCTYPE html>
             line-height: 1.7;
         }
 
-        /* Cinematic Projects Gallery */
+        /* ==================== SKILLS & ARSENAL ==================== */
+        .skills-filter-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .skills-tab-btn {
+            padding: 9px 22px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            font-size: 13.5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .skills-tab-btn.active, .skills-tab-btn:hover {
+            background: rgba(0, 245, 255, 0.12);
+            border-color: var(--cyan-glow);
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(0, 245, 255, 0.2);
+        }
+
+        .skills-bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .skill-item-card {
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            background: rgba(14, 18, 30, 0.6);
+            border: 1px solid var(--border-glass);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .skill-item-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 245, 255, 0.4);
+            background: rgba(20, 26, 44, 0.85);
+            box-shadow: 0 15px 30px rgba(0, 245, 255, 0.12);
+        }
+
+        .skill-top-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .skill-icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(0, 245, 255, 0.08);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--cyan-glow);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item-card:hover .skill-icon-wrap {
+            background: var(--gradient-accent);
+            color: #07090e;
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+        }
+
+        .skill-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .skill-subtext {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ==================== PROJECTS SHOWCASE ==================== */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -931,11 +1033,11 @@ F<!DOCTYPE html>
         }
 
         .artistic-project-card {
-            border-radius: 24px;
+            border-radius: var(--radius-xl);
             overflow: hidden;
-            background: rgba(14, 18, 28, 0.7);
+            background: rgba(14, 18, 28, 0.75);
             border: 1px solid var(--border-glass);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
             transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             text-decoration: none;
             color: inherit;
@@ -946,8 +1048,8 @@ F<!DOCTYPE html>
 
         .artistic-project-card:hover {
             transform: translateY(-10px) scale(1.01);
-            border-color: rgba(0, 245, 255, 0.4);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 245, 255, 0.2);
+            border-color: rgba(0, 245, 255, 0.45);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 245, 255, 0.25);
         }
 
         .project-media-wrapper {
@@ -955,7 +1057,7 @@ F<!DOCTYPE html>
             width: 100%;
             aspect-ratio: 16/9;
             overflow: hidden;
-            background: #000;
+            background: #020306;
         }
 
         .project-img {
@@ -975,9 +1077,9 @@ F<!DOCTYPE html>
             top: 20px;
             left: 20px;
             padding: 6px 14px;
-            background: rgba(7, 9, 14, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(6, 8, 14, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 30px;
             font-size: 12px;
             font-weight: 700;
@@ -988,10 +1090,10 @@ F<!DOCTYPE html>
         }
 
         .project-info-body {
-            padding: 32px 30px;
+            padding: 34px 32px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
             flex: 1;
             justify-content: space-between;
         }
@@ -1004,21 +1106,21 @@ F<!DOCTYPE html>
         }
 
         .artistic-project-card h3 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
             color: #ffffff;
             transition: color 0.3s ease;
         }
 
         .artistic-project-card:hover h3 {
-            background: linear-gradient(135deg, var(--cyan-glow), var(--purple-glow));
+            background: var(--gradient-accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .project-arrow-icon {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-glass);
@@ -1026,7 +1128,7 @@ F<!DOCTYPE html>
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
-            font-size: 15px;
+            font-size: 16px;
             transition: all 0.3s ease;
         }
 
@@ -1034,69 +1136,91 @@ F<!DOCTYPE html>
             background: var(--cyan-glow);
             color: #07090e;
             transform: translateX(4px) scale(1.08);
-            box-shadow: 0 0 15px var(--cyan-glow);
+            box-shadow: 0 0 18px var(--cyan-glow);
             border-color: transparent;
         }
 
         .project-snippet {
-            font-size: 15px;
+            font-size: 15.5px;
             color: var(--text-muted);
             line-height: 1.65;
+        }
+
+        .project-specs-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .project-specs-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-specs-meta i {
+            color: var(--cyan-glow);
         }
 
         .project-tech-pills {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .tech-pill {
-            padding: 4px 12px;
+            padding: 5px 13px;
             border-radius: 6px;
             background: rgba(0, 245, 255, 0.08);
-            border: 1px solid rgba(0, 245, 255, 0.2);
+            border: 1px solid rgba(0, 245, 255, 0.22);
             color: var(--cyan-glow);
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* Footer & Contact Section */
+        /* ==================== FOOTER & CONTACT ==================== */
         footer {
-            margin-top: 100px;
-            padding: 80px 24px 50px;
+            margin-top: 110px;
+            padding: 85px 24px 50px;
             position: relative;
-            background: linear-gradient(to bottom, transparent, rgba(5, 7, 12, 0.95));
+            background: linear-gradient(to bottom, transparent, rgba(4, 6, 10, 0.98));
             border-top: 1px solid var(--border-glass);
         }
 
         .footer-card {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto 50px;
-            padding: 50px 40px;
+            padding: 55px 44px;
             text-align: center;
-            border-radius: 28px;
-            background: radial-gradient(circle at center, rgba(20, 28, 48, 0.8) 0%, rgba(10, 14, 24, 0.9) 100%);
+            border-radius: 30px;
+            background: radial-gradient(circle at center, rgba(22, 30, 52, 0.85) 0%, rgba(10, 14, 26, 0.95) 100%);
             border: 1px solid var(--border-glass-bright);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
         }
 
         .footer-card h2 {
-            font-size: 38px;
+            font-size: 42px;
             font-weight: 900;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             background: linear-gradient(135deg, #ffffff, #cbd5e1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .footer-card p {
-            font-size: 17px;
+            font-size: 17.5px;
             color: var(--text-muted);
-            max-width: 580px;
-            margin: 0 auto 36px;
+            max-width: 620px;
+            margin: 0 auto 38px;
             line-height: 1.7;
         }
 
@@ -1121,6 +1245,7 @@ F<!DOCTYPE html>
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
         }
 
         .social-button i {
@@ -1134,7 +1259,7 @@ F<!DOCTYPE html>
             border-color: var(--cyan-glow);
             color: #ffffff;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 245, 255, 0.25);
+            box-shadow: 0 8px 22px rgba(0, 245, 255, 0.28);
         }
 
         .social-button:hover i {
@@ -1151,16 +1276,16 @@ F<!DOCTYPE html>
             align-items: center;
         }
 
-        /* Back to top button */
+        /* Floating Back to Top Button */
         .back-to-top {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: rgba(14, 18, 28, 0.85);
-            backdrop-filter: blur(16px);
+            background: rgba(14, 18, 30, 0.88);
+            backdrop-filter: blur(18px);
             border: 1px solid var(--border-glass-bright);
             color: var(--cyan-glow);
             display: flex;
@@ -1171,7 +1296,7 @@ F<!DOCTYPE html>
             z-index: 100;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
@@ -1187,13 +1312,44 @@ F<!DOCTYPE html>
             box-shadow: 0 0 25px rgba(0, 245, 255, 0.6);
         }
 
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 12px 24px;
+            background: rgba(14, 20, 36, 0.95);
+            border: 1px solid var(--cyan-glow);
+            border-radius: 30px;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.35);
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         /* Responsive Breakpoints */
         @media (max-width: 1024px) {
-            .about-grid {
+            .bento-grid {
                 grid-template-columns: 1fr;
             }
             .core-grid {
                 grid-template-columns: 1fr;
+            }
+            .skills-bento-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             .hero-stats-row {
                 grid-template-columns: repeat(2, 1fr);
@@ -1216,13 +1372,17 @@ F<!DOCTYPE html>
                 display: block;
             }
             .hero-title {
-                font-size: 40px;
+                font-size: 38px;
+                letter-spacing: -1px;
             }
             .hero-role {
-                font-size: 18px;
+                font-size: 17px;
                 letter-spacing: 2px;
             }
             .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .skills-bento-grid {
                 grid-template-columns: 1fr;
             }
             .hero-stats-row {
@@ -1234,10 +1394,19 @@ F<!DOCTYPE html>
             .footer-card {
                 padding: 36px 20px;
             }
+            .footer-card h2 {
+                font-size: 32px;
+            }
+            .bento-card-bio, .bento-card-specs {
+                padding: 26px 20px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
 
     <!-- Ambient Cursor Glow Spotlight -->
     <div class="cursor-glow" id="cursor-glow"></div>
@@ -1317,7 +1486,7 @@ F<!DOCTYPE html>
                     <span>Explore My Games</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
-                <a href="cv.pdf" download="DinhTanThanh_CV.pdf" class="btn-artistic-secondary" target="_blank">
+                <a href="CV_UnityDeveloper_DinhTanThanh.pdf" download="CV_UnityDeveloper_DinhTanThanh.pdf" class="btn-artistic-secondary" target="_blank">
                     <i class="fas fa-file-arrow-down"></i>
                     <span>Download Resume</span>
                 </a>
@@ -1334,8 +1503,8 @@ F<!DOCTYPE html>
                     <div class="stat-label">Solo Developed</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">2D & 3D</div>
-                    <div class="stat-label">Unity Engine</div>
+                    <div class="stat-number">60 FPS</div>
+                    <div class="stat-label">Zero GC Optimization</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">Clean</div>
@@ -1344,7 +1513,7 @@ F<!DOCTYPE html>
             </div>
         </section>
 
-        <!-- About Section -->
+        <!-- About Bento Section -->
         <section id="about">
             <div class="section-header-block">
                 <div class="section-tag"><i class="fas fa-fingerprint"></i> Identity & Background</div>
@@ -1354,21 +1523,21 @@ F<!DOCTYPE html>
                 </p>
             </div>
 
-            <div class="about-grid">
-                <!-- Left Story Panel -->
-                <div class="glass-panel about-card">
+            <div class="bento-grid">
+                <!-- Left Bio Card -->
+                <div class="glass-panel bento-card-bio">
                     <div>
                         <div class="card-header-artistic">
                             <div class="card-header-icon"><i class="fas fa-user-astronaut"></i></div>
                             <h3 class="card-header-title">About Me</h3>
                         </div>
                         <p class="about-body-text">
-                            As an aspiring Game Developer, I thrive at the intersection of game mechanics, mathematical logic, and player immersion. Developing solo titles from scratch has shaped my ability to build modular, maintainable systems from ground zero.
+                            As an aspiring Game Developer, I thrive at the intersection of gameplay mechanics, mathematical logic, and player immersion. Developing solo titles from scratch has shaped my ability to build modular, maintainable systems from ground zero.
                         </p>
                         <ul class="about-highlights-list">
                             <li>
                                 <i class="fas fa-check-circle"></i>
-                                <span><strong>End-to-End Game Development:</strong> Designing core loop, enemy AI, inventory, physics, and responsive UI.</span>
+                                <span><strong>End-to-End Game Development:</strong> Designing core loops, enemy AI, inventory, physics, and responsive UI.</span>
                             </li>
                             <li>
                                 <i class="fas fa-check-circle"></i>
@@ -1387,65 +1556,154 @@ F<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- Right Skills & Tech Arsenal Panel -->
-                <div class="glass-panel about-card" id="skills">
+                <!-- Right Quick Specs Card -->
+                <div class="glass-panel bento-card-specs">
                     <div>
                         <div class="card-header-artistic">
-                            <div class="card-header-icon"><i class="fas fa-microchip"></i></div>
-                            <h3 class="card-header-title">Technical Arsenal</h3>
+                            <div class="card-header-icon"><i class="fas fa-id-badge"></i></div>
+                            <h3 class="card-header-title">Developer Specs</h3>
                         </div>
-
-                        <div class="skills-container">
-                            <div>
-                                <div class="skill-category-title"><i class="fas fa-gamepad"></i> Engine & Core</div>
-                                <div class="skill-tags-group">
-                                    <div class="skill-badge"><i class="fab fa-unity"></i> Unity (2D & 3D)</div>
-                                    <div class="skill-badge"><i class="fas fa-code"></i> C# Language</div>
-                                </div>
+                        <div class="specs-list">
+                            <div class="spec-item">
+                                <span class="spec-label"><i class="fas fa-location-dot"></i> Location</span>
+                                <span class="spec-val">Ho Chi Minh City, VN</span>
                             </div>
-
-                            <div>
-                                <div class="skill-category-title"><i class="fas fa-cubes"></i> Architecture & Systems</div>
-                                <div class="skill-tags-group">
-                                    <div class="skill-badge"><i class="fas fa-layer-group"></i> Object Pooling</div>
-                                    <div class="skill-badge"><i class="fas fa-file-code"></i> ScriptableObjects</div>
-                                    <div class="skill-badge"><i class="fas fa-robot"></i> State Machine & AI</div>
-                                    <div class="skill-badge"><i class="fas fa-boxes-stacked"></i> Inventory Systems</div>
-                                </div>
+                            <div class="spec-item">
+                                <span class="spec-label"><i class="fas fa-graduation-cap"></i> Education</span>
+                                <span class="spec-val">Final-year IT (2022–2026)</span>
                             </div>
-
-                            <div>
-                                <div class="skill-category-title"><i class="fas fa-bolt"></i> Optimization & Tooling</div>
-                                <div class="skill-tags-group">
-                                    <div class="skill-badge"><i class="fas fa-chart-line"></i> Unity Profiler</div>
-                                    <div class="skill-badge"><i class="fas fa-film"></i> Animator & Blend Trees</div>
-                                    <div class="skill-badge"><i class="fab fa-git-alt"></i> Git & GitHub</div>
-                                    <div class="skill-badge"><i class="fas fa-window-restore"></i> Canvas UI System</div>
-                                </div>
+                            <div class="spec-item">
+                                <span class="spec-label"><i class="fas fa-laptop-code"></i> Main Engine</span>
+                                <span class="spec-val">Unity (2D / 3D)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label"><i class="fas fa-code"></i> Primary Language</span>
+                                <span class="spec-val">C# (.NET / OOP)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label"><i class="fas fa-bullseye"></i> Current Goal</span>
+                                <span class="spec-val" style="color: var(--cyan-glow);">Unity Game Dev (Fresher/Junior)</span>
                             </div>
                         </div>
+                    </div>
+
+                    <div style="margin-top: 24px;">
+                        <button class="social-button" id="copy-email-quick" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-copy"></i>
+                            <span>Copy Email Address</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Core Pillars Section -->
-            <div class="core-focus-section">
-                <div class="core-grid">
-                    <div class="glass-panel core-card">
-                        <div class="core-icon-box"><i class="fas fa-crosshairs"></i></div>
-                        <h4>Gameplay & Combat</h4>
-                        <p>Fluid character movement, shooting mechanics, customizable weapon loadouts, and tight physics-based collision feedback.</p>
+            <div class="core-grid">
+                <div class="glass-panel core-card">
+                    <div class="core-icon-box"><i class="fas fa-crosshairs"></i></div>
+                    <h4>Gameplay & Combat</h4>
+                    <p>Fluid character movement, shooting mechanics, customizable weapon loadouts, and tight physics-based collision feedback.</p>
+                </div>
+                <div class="glass-panel core-card">
+                    <div class="core-icon-box"><i class="fas fa-network-wired"></i></div>
+                    <h4>Intelligent Systems</h4>
+                    <p>Modular AI state machines, dynamic wave spawners, multi-tier enemy behaviors, and persistent player progression.</p>
+                </div>
+                <div class="glass-panel core-card">
+                    <div class="core-icon-box"><i class="fas fa-tachometer-alt"></i></div>
+                    <h4>Profiling & Performance</h4>
+                    <p>Garbage collection optimization, high-frequency object pooling, and efficient rendering batching for silky smooth frame rates.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Arsenal / Skills Section -->
+        <section id="skills">
+            <div class="section-header-block">
+                <div class="section-tag"><i class="fas fa-microchip"></i> Skills & Capabilities</div>
+                <h2 class="section-title">Technical <span>Arsenal</span></h2>
+                <p class="section-subtitle">
+                    Modern tools, game engine systems, and programming patterns utilized in game engineering.
+                </p>
+            </div>
+
+            <div class="skills-filter-nav">
+                <button class="skills-tab-btn active" data-filter="all">All Skills</button>
+                <button class="skills-tab-btn" data-filter="engine">Engine & Core</button>
+                <button class="skills-tab-btn" data-filter="architecture">Architecture & AI</button>
+                <button class="skills-tab-btn" data-filter="optimization">Optimization & Tools</button>
+            </div>
+
+            <div class="skills-bento-grid" id="skills-grid">
+                <!-- Skill 1 -->
+                <div class="skill-item-card" data-cat="engine">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fab fa-unity"></i></div>
+                        <div class="skill-name">Unity (2D & 3D)</div>
                     </div>
-                    <div class="glass-panel core-card">
-                        <div class="core-icon-box"><i class="fas fa-network-wired"></i></div>
-                        <h4>Intelligent Systems</h4>
-                        <p>Modular AI state machines, dynamic wave spawners, multi-tier enemy behaviors, and persistent player progression.</p>
+                    <p class="skill-subtext">Physics, Physics2D, Prefab workflows, Canvas UI, and Cinemachine virtual cameras.</p>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="skill-item-card" data-cat="engine">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fas fa-code"></i></div>
+                        <div class="skill-name">C# & OOP</div>
                     </div>
-                    <div class="glass-panel core-card">
-                        <div class="core-icon-box"><i class="fas fa-tachometer-alt"></i></div>
-                        <h4>Profiling & Performance</h4>
-                        <p>Garbage collection optimization, high-frequency object pooling, and efficient rendering batching for smooth frame rates.</p>
+                    <p class="skill-subtext">Strong object-oriented architecture, interfaces, generics, delegates, and event systems.</p>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="skill-item-card" data-cat="architecture">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fas fa-layer-group"></i></div>
+                        <div class="skill-name">Object Pooling</div>
                     </div>
+                    <p class="skill-subtext">Zero-allocation projectile, VFX, and enemy spawning to prevent GC frame stutters.</p>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="skill-item-card" data-cat="architecture">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fas fa-robot"></i></div>
+                        <div class="skill-name">State Machines & AI</div>
+                    </div>
+                    <p class="skill-subtext">FSM patrol, chase, attack, hurt, and death states with NavMesh pathfinding.</p>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="skill-item-card" data-cat="architecture">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fas fa-file-code"></i></div>
+                        <div class="skill-name">ScriptableObjects</div>
+                    </div>
+                    <p class="skill-subtext">Data-driven weapon stats, enemy archetypes, audio configurations, and item databases.</p>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="skill-item-card" data-cat="architecture">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fas fa-boxes-stacked"></i></div>
+                        <div class="skill-name">Inventory Systems</div>
+                    </div>
+                    <p class="skill-subtext">Modular slot grids, item pickup & drop mechanics, weapon loadouts, and persistence.</p>
+                </div>
+
+                <!-- Skill 7 -->
+                <div class="skill-item-card" data-cat="optimization">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fas fa-chart-line"></i></div>
+                        <div class="skill-name">Unity Profiler</div>
+                    </div>
+                    <p class="skill-subtext">Deep frame analysis, GC allocation tracing, draw-call reduction, and physics optimization.</p>
+                </div>
+
+                <!-- Skill 8 -->
+                <div class="skill-item-card" data-cat="optimization">
+                    <div class="skill-top-row">
+                        <div class="skill-icon-wrap"><i class="fab fa-git-alt"></i></div>
+                        <div class="skill-name">Git & GitHub</div>
+                    </div>
+                    <p class="skill-subtext">Branching, commit conventions, LFS for binary assets, and collaborative workflows.</p>
                 </div>
             </div>
         </section>
@@ -1473,7 +1731,11 @@ F<!DOCTYPE html>
                                 <h3>SPACE SHIP</h3>
                                 <div class="project-arrow-icon"><i class="fas fa-arrow-right"></i></div>
                             </div>
-                            <p class="project-snippet">
+                            <div class="project-specs-meta">
+                                <span><i class="fas fa-microchip"></i> Unity 6 (2D)</span>
+                                <span><i class="fas fa-gauge-high"></i> 60+ FPS Locked</span>
+                            </div>
+                            <p class="project-snippet" style="margin-top: 12px;">
                                 Fast-paced retro arcade shooter featuring dynamic wave spawning, customizable weapon upgrade systems, particle FX, and Object Pooling for silky-smooth bullet hell gameplay.
                             </p>
                         </div>
@@ -1482,6 +1744,7 @@ F<!DOCTYPE html>
                             <span class="tech-pill">C#</span>
                             <span class="tech-pill">Object Pooling</span>
                             <span class="tech-pill">Inventory System</span>
+                            <span class="tech-pill">Wave Spawner</span>
                         </div>
                     </div>
                 </a>
@@ -1498,15 +1761,19 @@ F<!DOCTYPE html>
                                 <h3>SURVIVAL TOP DOWN</h3>
                                 <div class="project-arrow-icon"><i class="fas fa-arrow-right"></i></div>
                             </div>
-                            <p class="project-snippet">
+                            <div class="project-specs-meta">
+                                <span><i class="fas fa-cube"></i> Unity 3D</span>
+                                <span><i class="fas fa-brain"></i> Modular FSM AI</span>
+                            </div>
+                            <p class="project-snippet" style="margin-top: 12px;">
                                 Immersive 3D top-down survival combat featuring intelligent enemy pathfinding, modular loot & inventory systems, weapon switching, and optimized boss encounter mechanics.
                             </p>
                         </div>
                         <div class="project-tech-pills">
                             <span class="tech-pill">Unity 3D</span>
                             <span class="tech-pill">C#</span>
-                            <span class="tech-pill">Enemy AI</span>
-                            <span class="tech-pill">Wave Spawner</span>
+                            <span class="tech-pill">Enemy FSM AI</span>
+                            <span class="tech-pill">ScriptableObjects</span>
                             <span class="tech-pill">Audio FX</span>
                         </div>
                     </div>
@@ -1518,16 +1785,16 @@ F<!DOCTYPE html>
     <!-- Footer Section -->
     <footer id="footer-section">
         <div class="footer-card">
-            <h2>Let's Build Something <span style="background: linear-gradient(135deg, var(--cyan-glow), var(--purple-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Epic</span> Together</h2>
+            <h2>Let's Build Something <span style="background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Epic</span> Together</h2>
             <p>
                 Currently seeking full-time Game Developer opportunities. Whether you have an exciting game in production or want to discuss gameplay architecture, feel free to reach out!
             </p>
 
             <div class="social-buttons-grid">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dinhtanthanh19@gmail.com" target="_blank" class="social-button">
+                <button class="social-button" id="copy-email-btn">
                     <i class="fas fa-envelope"></i>
                     <span>dinhtanthanh19@gmail.com</span>
-                </a>
+                </button>
                 <a href="https://github.com/DinhTanThanh" target="_blank" class="social-button">
                     <i class="fab fa-github"></i>
                     <span>GitHub</span>
@@ -1542,8 +1809,8 @@ F<!DOCTYPE html>
                 </a>
             </div>
 
-            <div style="display: flex; justify-content: center;">
-                <a href="cv.pdf" download="DinhTanThanh_CV.pdf" class="btn-artistic-primary" target="_blank">
+            <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                <a href="CV_UnityDeveloper_DinhTanThanh.pdf" download="CV_UnityDeveloper_DinhTanThanh.pdf" class="btn-artistic-primary" target="_blank">
                     <i class="fas fa-download"></i>
                     <span>Download CV / Resume</span>
                 </a>
@@ -1560,9 +1827,25 @@ F<!DOCTYPE html>
         <i class="fas fa-chevron-up"></i>
     </button>
 
-    <!-- Artistic Interactive Canvas Script & Interactions -->
+    <!-- Toast Notification -->
+    <div class="toast-notification" id="toast">
+        <i class="fas fa-check-circle" style="color: var(--cyan-glow);"></i>
+        <span id="toast-msg">Copied to clipboard!</span>
+    </div>
+
+    <!-- Script Interactions -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // Scroll Progress Bar
+            const scrollBar = document.getElementById("scroll-progress");
+            window.addEventListener("scroll", function () {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                if (totalHeight > 0) {
+                    const progress = (window.scrollY / totalHeight) * 100;
+                    scrollBar.style.width = `${progress}%`;
+                }
+            });
+
             // Ambient Cursor Follower
             const cursorGlow = document.getElementById("cursor-glow");
             let mouseX = window.innerWidth / 2;
@@ -1576,8 +1859,8 @@ F<!DOCTYPE html>
             });
 
             function animateCursor() {
-                currentX += (mouseX - currentX) * 0.1;
-                currentY += (mouseY - currentY) * 0.1;
+                currentX += (mouseX - currentX) * 0.12;
+                currentY += (mouseY - currentY) * 0.12;
                 if (cursorGlow) {
                     cursorGlow.style.left = `${currentX}px`;
                     cursorGlow.style.top = `${currentY}px`;
@@ -1589,25 +1872,25 @@ F<!DOCTYPE html>
             // Meteors Generator
             const shower = document.getElementById('meteor-shower');
             if (shower) {
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 22; i++) {
                     let meteor = document.createElement('div');
                     meteor.classList.add('meteor');
                     meteor.style.left = (Math.random() * 200 - 50) + 'vw';
                     meteor.style.top = (Math.random() * -100) + 'vh';
                     meteor.style.animationDuration = (Math.random() * 8 + 6) + 's';
-                    meteor.style.animationDelay = (Math.random() * 15) + 's';
+                    meteor.style.animationDelay = (Math.random() * 16) + 's';
                     shower.appendChild(meteor);
                 }
             }
 
-            // Interactive Background Starfield / Constellation Canvas
+            // Constellation Particle Canvas
             const canvas = document.getElementById("art-canvas");
             if (canvas) {
                 const ctx = canvas.getContext("2d");
                 let width, height;
                 let particles = [];
-                const particleCount = 75;
-                const maxDistance = 130;
+                const particleCount = 80;
+                const maxDistance = 140;
 
                 function resizeCanvas() {
                     width = canvas.width = window.innerWidth;
@@ -1620,8 +1903,8 @@ F<!DOCTYPE html>
                     constructor() {
                         this.x = Math.random() * width;
                         this.y = Math.random() * height;
-                        this.vx = (Math.random() - 0.5) * 0.6;
-                        this.vy = (Math.random() - 0.5) * 0.6;
+                        this.vx = (Math.random() - 0.5) * 0.5;
+                        this.vy = (Math.random() - 0.5) * 0.5;
                         this.radius = Math.random() * 1.8 + 0.8;
                         this.alpha = Math.random() * 0.6 + 0.2;
                         this.color = Math.random() > 0.5 ? '0, 245, 255' : '168, 85, 247';
@@ -1636,11 +1919,10 @@ F<!DOCTYPE html>
                         if (this.y < 0) this.y = height;
                         if (this.y > height) this.y = 0;
 
-                        // Slight cursor repulsion / interaction
                         const dx = mouseX - this.x;
                         const dy = mouseY - this.y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 100) {
+                        if (dist < 110) {
                             this.x -= dx * 0.02;
                             this.y -= dy * 0.02;
                         }
@@ -1671,7 +1953,7 @@ F<!DOCTYPE html>
                             const dist = Math.sqrt(dx * dx + dy * dy);
 
                             if (dist < maxDistance) {
-                                const lineAlpha = (1 - dist / maxDistance) * 0.15;
+                                const lineAlpha = (1 - dist / maxDistance) * 0.16;
                                 ctx.beginPath();
                                 ctx.moveTo(particles[i].x, particles[i].y);
                                 ctx.lineTo(particles[j].x, particles[j].y);
@@ -1681,7 +1963,6 @@ F<!DOCTYPE html>
                             }
                         }
                     }
-
                     requestAnimationFrame(render);
                 }
                 render();
@@ -1713,6 +1994,53 @@ F<!DOCTYPE html>
                 });
             }
 
+            // Toast Helper
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-msg");
+            function showToast(msg) {
+                if (toast && toastMsg) {
+                    toastMsg.textContent = msg;
+                    toast.classList.add("show");
+                    setTimeout(() => {
+                        toast.classList.remove("show");
+                    }, 2600);
+                }
+            }
+
+            // Copy Email Functionality
+            const emailButtons = [document.getElementById("copy-email-btn"), document.getElementById("copy-email-quick")];
+            emailButtons.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener("click", () => {
+                        navigator.clipboard.writeText("dinhtanthanh19@gmail.com").then(() => {
+                            showToast("Email copied: dinhtanthanh19@gmail.com");
+                        }).catch(() => {
+                            showToast("Email: dinhtanthanh19@gmail.com");
+                        });
+                    });
+                }
+            });
+
+            // Skills Filter Tab
+            const skillFilterBtns = document.querySelectorAll(".skills-tab-btn");
+            const skillCards = document.querySelectorAll(".skill-item-card");
+
+            skillFilterBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    skillFilterBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    const filter = btn.getAttribute("data-filter");
+
+                    skillCards.forEach(card => {
+                        if (filter === "all" || card.getAttribute("data-cat") === filter) {
+                            card.style.display = "flex";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                });
+            });
+
             // Back to Top Button
             const backToTopBtn = document.getElementById("backToTop");
             window.addEventListener("scroll", () => {
@@ -1736,7 +2064,7 @@ F<!DOCTYPE html>
             window.addEventListener("scroll", () => {
                 let current = "";
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 150;
+                    const sectionTop = section.offsetTop - 160;
                     if (window.scrollY >= sectionTop) {
                         current = section.getAttribute("id");
                     }

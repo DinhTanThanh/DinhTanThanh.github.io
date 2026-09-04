@@ -58,6 +58,19 @@
         cursor: default;
       }
 
+      /* Top Scroll Progress Indicator */
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(135deg, #00f5ff 0%, #38bdf8 45%, #a855f7 100%);
+        width: 0%;
+        z-index: 10000;
+        box-shadow: 0 0 10px var(--cyan-glow);
+        transition: width 0.1s ease-out;
+      }
+
       /* Ambient Cursor Glow Spotlight */
       .cursor-glow {
         position: fixed;
@@ -799,6 +812,9 @@
     </style>
   </head>
   <body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
     <!-- Ambient Cursor Glow Spotlight -->
     <div class="cursor-glow" id="cursor-glow"></div>
 
@@ -989,7 +1005,7 @@
           <a href="https://dinh-tan-thanh.itch.io/" target="_blank" class="social-link" title="itch.io"><i class="fab fa-itch-io"></i></a>
         </div>
 
-        <a href="cv.pdf" download="DinhTanThanh_CV.pdf" class="btn-artistic-primary" target="_blank">
+        <a href="CV_UnityDeveloper_DinhTanThanh.pdf" download="CV_UnityDeveloper_DinhTanThanh.pdf" class="btn-artistic-primary" target="_blank">
           <i class="fas fa-download"></i>
           <span>Download Resume</span>
         </a>
@@ -1014,6 +1030,16 @@
     <!-- Scripts -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // Scroll Progress Bar
+        const scrollBar = document.getElementById("scroll-progress");
+        window.addEventListener("scroll", function () {
+          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (totalHeight > 0 && scrollBar) {
+            const progress = (window.scrollY / totalHeight) * 100;
+            scrollBar.style.width = `${progress}%`;
+          }
+        });
+
         // Cursor Glow Follower
         const cursorGlow = document.getElementById("cursor-glow");
         let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
